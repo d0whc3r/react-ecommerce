@@ -12,10 +12,6 @@ interface MenuItemProps extends RouteComponentProps {
 }
 
 class MenuItem extends React.Component<MenuItemProps, any> {
-  constructor(props: MenuItemProps) {
-    super(props);
-  }
-
   static propTypes = {
     title: PropTypes.string.isRequired,
     imageUrl: PropTypes.string.isRequired,
