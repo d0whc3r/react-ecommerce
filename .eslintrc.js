@@ -29,5 +29,6 @@ module.exports = {
     'project': './tsconfig.json'
   },
   'plugins': ['react', '@typescript-eslint', 'prettier'],
-  'rules': {}
+  'rules': {
+  }
 };
