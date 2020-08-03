@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import './header.styles.scss';
-import { LoggedUser } from '../../types';
 import { auth } from '../../firebase/firebase.utils';
+import { LoggedUser } from '../../redux/user/user.types';
+import { connect } from 'react-redux';
+import { RootState } from '../../redux/root-reducer';
 
 interface HeaderProps {
   currentUser: LoggedUser | null;
@@ -40,4 +42,10 @@ Header.propTypes = {
   currentUser: PropTypes.any
 };
 
-export default Header;
+function mapStateToProps(state: RootState) {
+  return {
+    currentUser: state.user.currentUser
+  };
+}
+
+export default connect(mapStateToProps)(Header);

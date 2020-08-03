@@ -29,7 +29,6 @@ class SignIn extends React.Component<RouteComponentProps, SignInState> {
     try {
       await auth.signInWithEmailAndPassword(email, password);
       this.setState({ email: '', password: '' });
-      this.redirect();
     } catch (error) {
       console.error(error.message);
     }
@@ -48,11 +47,7 @@ class SignIn extends React.Component<RouteComponentProps, SignInState> {
   }
 
   signInWithGoogle() {
-    signInWithGoogle().then(this.redirect);
-  }
-
-  redirect() {
-    this.props.history.push('/');
+    signInWithGoogle();
   }
 
   render() {
