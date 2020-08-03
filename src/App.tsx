@@ -6,11 +6,11 @@ import HomePage from './pages/home/home.component';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import SignInPage from './pages/sign-in-sign-up/sign-in-sign-up.component';
-import { auth } from './firebase/firebase.utils';
-import { User } from 'types';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import { LoggedUser } from './types';
 
 interface AppState {
-  currentUser: null | User;
+  currentUser: LoggedUser | null;
 }
 
 class App extends React.Component<any, AppState> {
@@ -22,19 +22,25 @@ class App extends React.Component<any, AppState> {
     };
   }
 
-  componentDidMount() {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        const { displayName, email, photoURL } = user;
-        this.setState({ currentUser: { name: displayName, email, photoURL } });
-      } else {
-        this.setState({ currentUser: null });
-      }
-    });
-  }
+  unsubscribeFromAuth = () => {};
 
-  unsubscribeFromAuth() {
-    this.setState({ currentUser: null });
+  componentDidMount() {
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (user) => {
+      if (user) {
+        const userRef = await createUserProfileDocument(user);
+        userRef?.onSnapshot((snapShot) => {
+          const data = snapShot.data()!;
+          const currentUser: LoggedUser = {
+            id: snapShot.id,
+            displayName: data.displayName,
+            email: data.email,
+            createdAt: data.createdAt.toDate()
+          };
+          this.setState({ currentUser });
+        });
+      }
+      this.setState({ currentUser: null });
+    });
   }
 
   componentWillUnmount() {

@@ -1,5 +1,6 @@
-export interface User {
-  email: string | null;
-  name: string | null;
-  photoURL?: string | null;
+export interface LoggedUser {
+  id: string;
+  email: string;
+  displayName: string;
+  createdAt: Date;
 }

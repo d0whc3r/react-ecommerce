@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './custom-button.styles.scss';
 
 interface CustomButtonProps {
-  children: any;
+  children: PropTypes.ReactNodeLike;
   type?: 'button' | 'submit' | 'reset';
   onClick?: () => void;
   isGoogleSignIn?: boolean;

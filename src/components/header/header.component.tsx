@@ -4,11 +4,11 @@ import { Link } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import './header.styles.scss';
-import { User } from '../../types';
+import { LoggedUser } from '../../types';
 import { auth } from '../../firebase/firebase.utils';
 
 interface HeaderProps {
-  currentUser: User | null;
+  currentUser: LoggedUser | null;
 }
 
 const Header: React.FC<HeaderProps> = ({ currentUser }) => (

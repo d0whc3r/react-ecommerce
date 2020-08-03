@@ -3,16 +3,16 @@ import React from 'react';
 import './sign-in.styles.scss';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
-
 import { signInWithGoogle } from '../../firebase/firebase.utils';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 interface SignInState {
   email: string;
   password: string;
 }
 
-class SignIn extends React.Component<any, SignInState> {
-  constructor(props: any) {
+class SignIn extends React.Component<RouteComponentProps, SignInState> {
+  constructor(props: RouteComponentProps) {
     super(props);
 
     this.state = {
@@ -38,6 +38,12 @@ class SignIn extends React.Component<any, SignInState> {
     }
   }
 
+  signInWithGoogle() {
+    signInWithGoogle().then(() => {
+      this.props.history.push('/');
+    });
+  }
+
   render() {
     const { email, password } = this.state;
     return (
@@ -51,7 +57,7 @@ class SignIn extends React.Component<any, SignInState> {
 
           <div className="buttons">
             <CustomButton type="submit">Sign In</CustomButton>
-            <CustomButton type="button" isGoogleSignIn onClick={signInWithGoogle}>
+            <CustomButton type="button" isGoogleSignIn onClick={() => this.signInWithGoogle()}>
               Sign In With Google
             </CustomButton>
           </div>
@@ -61,4 +67,4 @@ class SignIn extends React.Component<any, SignInState> {
   }
 }
 
-export default SignIn;
+export default withRouter(SignIn);
