@@ -3,7 +3,7 @@ import React from 'react';
 import './sign-in.styles.scss';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
-import { signInWithGoogle } from '../../firebase/firebase.utils';
+import { auth, signInWithGoogle } from '../../firebase/firebase.utils';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 interface SignInState {
@@ -21,9 +21,18 @@ class SignIn extends React.Component<RouteComponentProps, SignInState> {
     };
   }
 
-  handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    this.setState({ email: '', password: '' });
+
+    const { email, password } = this.state;
+
+    try {
+      await auth.signInWithEmailAndPassword(email, password);
+      this.setState({ email: '', password: '' });
+      this.redirect();
+    } catch (error) {
+      console.error(error.message);
+    }
   }
 
   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -39,9 +48,11 @@ class SignIn extends React.Component<RouteComponentProps, SignInState> {
   }
 
   signInWithGoogle() {
-    signInWithGoogle().then(() => {
-      this.props.history.push('/');
-    });
+    signInWithGoogle().then(this.redirect);
+  }
+
+  redirect() {
+    this.props.history.push('/');
   }
 
   render() {
