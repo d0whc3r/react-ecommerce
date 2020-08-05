@@ -5,15 +5,14 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import './header.styles.scss';
 import { auth } from '../../firebase/firebase.utils';
-import { LoggedUser } from '../../redux/user/user.types';
 import { connect } from 'react-redux';
 import { RootState } from '../../redux/root-reducer';
+import CartIcon from '../cart-icon/cart-icon.comonent';
+import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 
-interface HeaderProps {
-  currentUser: LoggedUser | null;
-}
+type HeaderProps = ReturnType<typeof mapStateToProps>;
 
-const Header: React.FC<HeaderProps> = ({ currentUser }) => (
+const Header: React.FC<HeaderProps> = ({ currentUser, hidden }) => (
   <div className="header">
     <Link to="/" className="logo-container">
       <Logo className="logo" />
@@ -34,7 +33,9 @@ const Header: React.FC<HeaderProps> = ({ currentUser }) => (
           SIGN IN
         </Link>
       )}
+      <CartIcon />
     </div>
+    {hidden ? null : <CartDropdown />}
   </div>
 );
 
@@ -42,9 +43,10 @@ Header.propTypes = {
   currentUser: PropTypes.any
 };
 
-function mapStateToProps(state: RootState) {
+function mapStateToProps({ user: { currentUser }, cart: { hidden } }: RootState) {
   return {
-    currentUser: state.user.currentUser
+    currentUser,
+    hidden
   };
 }
 
