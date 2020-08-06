@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import { ReactComponent as Logo } from '../../assets/crown.svg';
+import Logo from '../../assets/crown.svg';
 import './header.styles.scss';
-import { auth } from '../../utils/firebase.utils';
+import { auth } from '../../utils';
 import { connect } from 'react-redux';
 import { RootState } from '../../redux/root-reducer';
 import CartIcon from '../cart-icon/cart-icon.comonent';
@@ -15,7 +15,7 @@ type HeaderProps = ReturnType<typeof mapStateToProps>;
 const Header: React.FC<HeaderProps> = ({ currentUser, hidden }) => (
   <div className="header">
     <Link to="/" className="logo-container">
-      <Logo className="logo" />
+      <img src={Logo} className="logo" alt="Logo" />
     </Link>
     <div className="options">
       <Link to="/shop" className="option">

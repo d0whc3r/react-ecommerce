@@ -3,7 +3,7 @@ import React from 'react';
 import './sign-in.styles.scss';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
-import { auth, signInWithGoogle } from '../../utils/firebase.utils';
+import { auth, signInWithGoogle } from '../../utils';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 interface SignInState {

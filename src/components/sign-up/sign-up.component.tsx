@@ -5,7 +5,7 @@ import './sign-up.styles.scss';
 import FormInput from '../form-input/form-input.component';
 import CustomButton from '../custom-button/custom-button.component';
 
-import { auth, createUserProfileDocument } from '../../utils/firebase.utils';
+import { auth, createUserProfileDocument } from '../../utils';
 
 interface SignUpState {
   displayName: string;
@@ -47,12 +47,6 @@ class SignUp extends React.Component<any, SignUpState> {
     }
   }
 
-  private handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
-    // @ts-ignore
-    this.setState({ [name]: value });
-  }
-
   render() {
     const { displayName, email, password, confirmPassword } = this.state;
     return (
@@ -76,6 +70,12 @@ class SignUp extends React.Component<any, SignUpState> {
         </form>
       </div>
     );
+  }
+
+  private handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    // @ts-ignore
+    this.setState({ [name]: value });
   }
 }
 

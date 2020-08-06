@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { ReactComponent as ShoppingIcon } from '../../assets/shopping-bag.svg';
+import ShoppingIcon from '../../assets/shopping-bag.svg';
 
 import './cart-icon.styles.scss';
 import { connect } from 'react-redux';
@@ -13,7 +13,7 @@ type CartIconProps = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof m
 
 const CartIcon: React.FC<CartIconProps> = ({ itemCount, toggleCartHidden }) => (
   <div className="cart-icon" onClick={toggleCartHidden}>
-    <ShoppingIcon className="shopping-icon" />
+    <img src={ShoppingIcon} className="shopping-icon" alt="Shopping icon" />
     <span className="item-count">{itemCount}</span>
   </div>
 );

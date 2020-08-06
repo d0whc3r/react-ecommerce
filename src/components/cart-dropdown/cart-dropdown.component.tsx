@@ -5,7 +5,7 @@ import './cart-dropdown.scss';
 import CustomButton from '../custom-button/custom-button.component';
 import { connect } from 'react-redux';
 import { RootState } from '../../redux/root-reducer';
-import CartItemComponent from 'components/cart-item/cart-item.component';
+import CartItemComponent from '../cart-item/cart-item.component';
 
 type CartDropdownProps = ReturnType<typeof mapStateToProps>;
 
