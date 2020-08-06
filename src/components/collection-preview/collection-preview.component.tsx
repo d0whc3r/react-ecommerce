@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './collection-preview.styles.scss';
-import { ShopCollectionItems } from '../../pages/shop/shop.types';
+import { ShopCollectionItem } from '../../pages/shop/shop.types';
 import CollectionItem from '../collection-item/collection-item.component';
 
 interface CollectionPreviewProps {
   title: string;
-  items: ShopCollectionItems[];
+  items: ShopCollectionItem[];
 }
 
 const CollectionPreview: React.FC<CollectionPreviewProps> = ({ title, items }) => (
@@ -16,8 +16,8 @@ const CollectionPreview: React.FC<CollectionPreviewProps> = ({ title, items }) =
     <div className="preview">
       {items
         .filter((_, index) => index < 4)
-        .map(({ ...itemProps }) => (
-          <CollectionItem key={itemProps.id} {...itemProps} />
+        .map((item) => (
+          <CollectionItem key={item.id} item={item} />
         ))}
     </div>
   </div>

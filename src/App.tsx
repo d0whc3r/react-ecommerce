@@ -1,13 +1,13 @@
 import React from 'react';
-import { Route, Switch, Redirect } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 
 import './App.scss';
 import HomePage from './pages/home/home.component';
 import ShopPage from './pages/shop/shop.component';
 import Header from './components/header/header.component';
 import SignInPage from './pages/sign-in-sign-up/sign-in-sign-up.component';
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
-import { LoggedUser } from './redux/user/user.types';
+import { auth, createUserProfileDocument } from './utils';
+import { LoggedUser, SetCurrentUserAction } from './redux/user/user.types';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { setCurrentUser } from './redux/user/user.actions';
@@ -65,7 +65,7 @@ function mapStateToProps({ user }: RootState) {
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    setCurrentUser: (user: LoggedUser | null) => dispatch(setCurrentUser(user))
+    setCurrentUser: (user: SetCurrentUserAction['payload']) => dispatch(setCurrentUser(user))
   };
 }
 

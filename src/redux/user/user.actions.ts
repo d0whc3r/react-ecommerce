@@ -1,6 +1,6 @@
-import { LoggedUser, SET_CURRENT_USER, UserActionTypes } from './user.types';
+import { SET_CURRENT_USER, SetCurrentUserAction, UserActionTypes } from './user.types';
 
-export function setCurrentUser(user: LoggedUser | null): UserActionTypes {
+export function setCurrentUser(user: SetCurrentUserAction['payload']): UserActionTypes {
   return {
     type: SET_CURRENT_USER,
     payload: user

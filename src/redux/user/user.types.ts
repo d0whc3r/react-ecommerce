@@ -11,7 +11,7 @@ export interface UserState {
   currentUser: LoggedUser | null;
 }
 
-interface SetCurrentUserAction {
+export interface SetCurrentUserAction {
   type: typeof SET_CURRENT_USER;
   payload: UserState['currentUser'];
 }

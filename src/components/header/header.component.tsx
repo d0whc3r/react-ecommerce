@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 import './header.styles.scss';
-import { auth } from '../../firebase/firebase.utils';
+import { auth } from '../../utils/firebase.utils';
 import { connect } from 'react-redux';
 import { RootState } from '../../redux/root-reducer';
 import CartIcon from '../cart-icon/cart-icon.comonent';
@@ -40,7 +40,8 @@ const Header: React.FC<HeaderProps> = ({ currentUser, hidden }) => (
 );
 
 Header.propTypes = {
-  currentUser: PropTypes.any
+  currentUser: PropTypes.any,
+  hidden: PropTypes.bool.isRequired
 };
 
 function mapStateToProps({ user: { currentUser }, cart: { hidden } }: RootState) {

@@ -1,4 +1,4 @@
-export interface ShopCollectionItems {
+export interface ShopCollectionItem {
   id: number;
   name: string;
   imageUrl: string;
@@ -9,5 +9,5 @@ export interface ShopCollection {
   id: number;
   title: string;
   routeName: string;
-  items: ShopCollectionItems[];
+  items: ShopCollectionItem[];
 }
