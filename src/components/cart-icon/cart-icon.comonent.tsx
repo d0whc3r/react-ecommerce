@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { toggleCartHidden } from '../../redux/cart/cart.actions';
 import { RootState } from '../../redux/root-reducer';
+import { selectCartItemsCount } from '../../redux/cart/cat.selectors';
 
 type CartIconProps = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>;
 
@@ -23,9 +24,9 @@ CartIcon.propTypes = {
   toggleCartHidden: PropTypes.func.isRequired
 };
 
-function mapStateToProps({ cart: { cartItems } }: RootState) {
+function mapStateToProps(state: RootState) {
   return {
-    itemCount: cartItems.reduce((a, item) => a + item.quantity, 0)
+    itemCount: selectCartItemsCount(state)
   };
 }
 
