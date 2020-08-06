@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build",
+    "build": "rimraf dist build && tsc && vite build",
     "test": "react-scripts test",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src/",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx src/ --fix",
@@ -41,6 +41,7 @@
     "patch-package": "6.2.2",
     "prettier": "2.0.5",
     "react-scripts": "3.4.1",
+    "rimraf": "3.0.2",
     "sass": "1.26.10",
     "typescript": "3.9.7",
     "vite": "1.0.0-rc.4",
