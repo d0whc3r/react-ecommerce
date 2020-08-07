@@ -9,6 +9,7 @@ import { Dispatch } from 'redux';
 import { toggleCartHidden } from '../../redux/cart/cart.actions';
 import { RootState } from '../../redux/root-reducer';
 import { selectCartItemsCount } from '../../redux/cart/cat.selectors';
+import { createStructuredSelector } from 'reselect';
 
 type CartIconProps = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>;
 
@@ -24,11 +25,13 @@ CartIcon.propTypes = {
   toggleCartHidden: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state: RootState) {
-  return {
-    itemCount: selectCartItemsCount(state)
-  };
+interface MapStateToPropsSelector {
+  itemCount: ReturnType<typeof selectCartItemsCount>;
 }
+
+const mapStateToProps = createStructuredSelector<RootState, MapStateToPropsSelector>({
+  itemCount: selectCartItemsCount
+});
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {

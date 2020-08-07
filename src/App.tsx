@@ -11,7 +11,11 @@ import { LoggedUser, SetCurrentUserAction } from './redux/user/user.types';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { setCurrentUser } from './redux/user/user.actions';
+import { createStructuredSelector } from 'reselect';
+import { selectCurrentUser } from './redux/user/user.selectors';
 import { RootState } from './redux/root-reducer';
+import { selectCartHidden } from './redux/cart/cat.selectors';
+import CheckoutPage from './pages/checkout/checkout.component';
 
 type AppProps = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>;
 
@@ -49,19 +53,22 @@ class App extends React.Component<AppProps> {
         <Header />
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route exact path="/shop" component={ShopPage} />
+          <Route path="/shop" component={ShopPage} />
           <Route exact path="/signIn" render={() => (this.props.currentUser ? <Redirect to="/" /> : <SignInPage />)} />
+          <Route exact path="/checkout" component={CheckoutPage} />
         </Switch>
       </div>
     );
   }
 }
 
-function mapStateToProps({ user }: RootState) {
-  return {
-    currentUser: user.currentUser
-  };
+interface MapStateToPropsSelector {
+  currentUser: ReturnType<typeof selectCurrentUser>;
 }
+
+const mapStateToProps = createStructuredSelector<RootState, MapStateToPropsSelector>({
+  currentUser: selectCurrentUser
+});
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {

@@ -4,30 +4,53 @@ import PropTypes from 'prop-types';
 import './cart-dropdown.scss';
 import CustomButton from '../custom-button/custom-button.component';
 import { connect } from 'react-redux';
-import { RootState } from '../../redux/root-reducer';
 import CartItemComponent from '../cart-item/cart-item.component';
+import { createStructuredSelector } from 'reselect';
+import { selectCartItems } from '../../redux/cart/cat.selectors';
+import { RootState } from '../../redux/root-reducer';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Dispatch } from 'redux';
+import { toggleCartHidden } from '../../redux/cart/cart.actions';
 
-type CartDropdownProps = ReturnType<typeof mapStateToProps>;
+type CartDropdownProps = ReturnType<typeof mapStateToProps> & ReturnType<typeof mapDispatchToProps> & RouteComponentProps;
 
-const CartDropdown: React.FC<CartDropdownProps> = ({ cartItems }) => (
+const CartDropdown: React.FC<CartDropdownProps> = ({ cartItems, history, toggleCartHidden }) => (
   <div className="cart-dropdown">
     <div className="cart-items">
-      {cartItems.map((item) => (
-        <CartItemComponent key={item.id} item={item} />
-      ))}
+      {cartItems.length ? (
+        cartItems.map((item) => <CartItemComponent key={item.id} item={item} />)
+      ) : (
+        <span className="empty-message">Your cart is empty</span>
+      )}
     </div>
-    <CustomButton>GO TO CHECKOUT</CustomButton>
+    <CustomButton
+      onClick={() => {
+        history.push('/checkout');
+        toggleCartHidden();
+      }}>
+      GO TO CHECKOUT
+    </CustomButton>
   </div>
 );
 
 CartDropdown.propTypes = {
-  cartItems: PropTypes.array.isRequired
+  cartItems: PropTypes.array.isRequired,
+  history: PropTypes.any,
+  toggleCartHidden: PropTypes.func.isRequired
 };
 
-function mapStateToProps({ cart: { cartItems } }: RootState) {
+interface MapStateToPropsSelector {
+  cartItems: ReturnType<typeof selectCartItems>;
+}
+
+const mapStateToProps = createStructuredSelector<RootState, MapStateToPropsSelector>({
+  cartItems: selectCartItems
+});
+
+function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    cartItems
+    toggleCartHidden: () => dispatch(toggleCartHidden())
   };
 }
 
-export default connect(mapStateToProps)(CartDropdown);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(CartDropdown));

@@ -6,9 +6,12 @@ import Logo from '../../assets/crown.svg';
 import './header.styles.scss';
 import { auth } from '../../utils';
 import { connect } from 'react-redux';
-import { RootState } from '../../redux/root-reducer';
+import { createStructuredSelector } from 'reselect';
 import CartIcon from '../cart-icon/cart-icon.comonent';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
+import { selectCartHidden, selectCartItems } from '../../redux/cart/cat.selectors';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
+import { RootState } from '../../redux/root-reducer';
 
 type HeaderProps = ReturnType<typeof mapStateToProps>;
 
@@ -44,11 +47,14 @@ Header.propTypes = {
   hidden: PropTypes.bool.isRequired
 };
 
-function mapStateToProps({ user: { currentUser }, cart: { hidden } }: RootState) {
-  return {
-    currentUser,
-    hidden
-  };
+interface MapStateToPropsSelector {
+  currentUser: ReturnType<typeof selectCurrentUser>;
+  hidden: ReturnType<typeof selectCartHidden>;
 }
+
+const mapStateToProps = createStructuredSelector<RootState, MapStateToPropsSelector>({
+  currentUser: selectCurrentUser,
+  hidden: selectCartHidden
+});
 
 export default connect(mapStateToProps)(Header);
