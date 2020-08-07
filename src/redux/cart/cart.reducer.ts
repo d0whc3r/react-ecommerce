@@ -1,4 +1,4 @@
-import { ADD_ITEM, CartActionTypes, CartState, TOGGLE_CART_HIDDEN } from './cart.types';
+import { ADD_ITEM, CartActionTypes, CartState, REMOVE_ITEM, TOGGLE_CART_HIDDEN } from './cart.types';
 import { addItemToCart } from './cart.utils';
 
 const INITIAL_STATE: CartState = {
@@ -17,6 +17,11 @@ export function cartReducer(state = INITIAL_STATE, action: CartActionTypes) {
       return {
         ...state,
         cartItems: addItemToCart(state.cartItems, action.payload)
+      };
+    case REMOVE_ITEM:
+      return {
+        ...state,
+        cartItems: state.cartItems.filter((cartItem) => cartItem.id !== action.payload)
       };
     default:
       return state;
