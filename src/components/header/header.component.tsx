@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 import CartIcon from '../cart-icon/cart-icon.comonent';
 import CartDropdown from '../cart-dropdown/cart-dropdown.component';
-import { selectCartHidden, selectCartItems } from '../../redux/cart/cat.selectors';
+import { selectCartHidden } from '../../redux/cart/cat.selectors';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { RootState } from '../../redux/root-reducer';
 

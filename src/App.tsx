@@ -14,7 +14,6 @@ import { setCurrentUser } from './redux/user/user.actions';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { RootState } from './redux/root-reducer';
-import { selectCartHidden } from './redux/cart/cat.selectors';
 import CheckoutPage from './pages/checkout/checkout.component';
 
 type AppProps = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>;

@@ -16,6 +16,7 @@
       height: 100%;
     }
   }
+
   .name,
   .quantity,
   .price {
@@ -23,7 +24,22 @@
   }
 
   .quantity {
-    padding-left: 20px;
+    display: flex;
+
+    .arrow {
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-top: 3px;
+
+      &.disabled {
+        color: grey;
+        cursor: not-allowed;
+      }
+    }
+
+    .value {
+      margin: 0 10px;
+    }
   }
 
   .remove-button {

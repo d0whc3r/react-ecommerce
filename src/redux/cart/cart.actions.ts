@@ -1,4 +1,15 @@
-import { ADD_ITEM, CartActionTypes, CartAddAction, CartRemoveAction, REMOVE_ITEM, TOGGLE_CART_HIDDEN } from './cart.types';
+import {
+  ADD_ITEM,
+  CartActionTypes,
+  CartAddAction,
+  CartClearItemAction,
+  CartDecreaseItemAction,
+  CartIncreaseItemAction,
+  CLEAR_ITEM,
+  DECREASE_ITEM,
+  INCREASE_ITEM,
+  TOGGLE_CART_HIDDEN
+} from './cart.types';
 
 export function toggleCartHidden(): CartActionTypes {
   return {
@@ -13,9 +24,23 @@ export function addItem<T extends CartAddAction['payload']>(item: T): CartAction
   };
 }
 
-export function removeItem<T extends CartRemoveAction['payload']>(id: T): CartActionTypes {
+export function clearItem<T extends CartClearItemAction['payload']>(id: T): CartActionTypes {
   return {
-    type: REMOVE_ITEM,
+    type: CLEAR_ITEM,
+    payload: id
+  };
+}
+
+export function decreaseItem<T extends CartDecreaseItemAction['payload']>(id: T): CartActionTypes {
+  return {
+    type: DECREASE_ITEM,
+    payload: id
+  };
+}
+
+export function increaseItem<T extends CartIncreaseItemAction['payload']>(id: T): CartActionTypes {
+  return {
+    type: INCREASE_ITEM,
     payload: id
   };
 }
