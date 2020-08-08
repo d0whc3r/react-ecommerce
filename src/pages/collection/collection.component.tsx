@@ -7,10 +7,11 @@ import { RouteComponentProps } from 'react-router-dom';
 import { selectCollection } from '../../redux/shop/shop.selectors';
 import { RootState } from '../../redux/root-reducer';
 import { connect } from 'react-redux';
-import { ShopCollection } from '../../redux/shop/shop.types';
+import { ShopCollection, ShopCollectionCategoriesNames } from '../../redux/shop/shop.types';
+import CollectionItem from '../../components/collection-item/collection-item.component';
 
 interface CollectionPageParams {
-  collectionId: string;
+  collectionId: ShopCollectionCategoriesNames;
 }
 
 interface CollectionPageProps extends RouteComponentProps<CollectionPageParams> {
@@ -18,9 +19,22 @@ interface CollectionPageProps extends RouteComponentProps<CollectionPageParams> 
 }
 
 const CollectionPage: React.FC<CollectionPageProps> = ({ collection }) => {
+  if (!collection) {
+    return (
+      <div className="collection-page">
+        <h2 className="title">Unknown collection</h2>
+      </div>
+    );
+  }
+  const { title, items } = collection;
   return (
-    <div className="collection">
-      <h2>Collection {collection?.title}</h2>
+    <div className="collection-page">
+      <h2 className="title">{title}</h2>
+      <div className="items">
+        {items.map((item) => (
+          <CollectionItem key={item.id} item={item} />
+        ))}
+      </div>
     </div>
   );
 };

@@ -1,12 +1,13 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './collection-item.styles.scss';
-import { ShopCollectionItem } from '../../pages/shop/shop.types';
 import CustomButton from '../custom-button/custom-button.component';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
 import { addItem } from '../../redux/cart/cart.actions';
 import { CartAddAction } from '../../redux/cart/cart.types';
+import { ShopCollectionItem } from '../../redux/shop/shop.types';
 
 interface CollectionItemProps extends ReturnType<typeof mapDispatchToProps> {
   item: ShopCollectionItem;
@@ -26,6 +27,11 @@ const CollectionItem: React.FC<CollectionItemProps> = ({ item, addItem }) => {
       </CustomButton>
     </div>
   );
+};
+
+CollectionItem.propTypes = {
+  addItem: PropTypes.func.isRequired,
+  item: PropTypes.any
 };
 
 function mapDispatchToProps(dispatch: Dispatch) {

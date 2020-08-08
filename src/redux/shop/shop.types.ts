@@ -12,6 +12,16 @@ export interface ShopCollection {
   items: ShopCollectionItem[];
 }
 
+export interface ShopCollectionCategories {
+  hats: ShopCollection;
+  jackets: ShopCollection;
+  sneakers: ShopCollection;
+  womens: ShopCollection;
+  mens: ShopCollection;
+}
+
+export type ShopCollectionCategoriesNames = keyof ShopCollectionCategories;
+
 export interface ShopCollectionState {
-  collections: ShopCollection[];
+  collections: ShopCollectionCategories;
 }

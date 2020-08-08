@@ -1,7 +1,7 @@
-import { ShopCollection } from './shop.types';
+import { ShopCollectionCategories } from './shop.types';
 
-const SHOP_DATA: ShopCollection[] = [
-  {
+const SHOP_DATA: ShopCollectionCategories = {
+  hats: {
     id: 1,
     title: 'Hats',
     routeName: 'hats',
@@ -62,7 +62,7 @@ const SHOP_DATA: ShopCollection[] = [
       }
     ]
   },
-  {
+  sneakers: {
     id: 2,
     title: 'Sneakers',
     routeName: 'sneakers',
@@ -117,7 +117,7 @@ const SHOP_DATA: ShopCollection[] = [
       }
     ]
   },
-  {
+  jackets: {
     id: 3,
     title: 'Jackets',
     routeName: 'jackets',
@@ -154,7 +154,7 @@ const SHOP_DATA: ShopCollection[] = [
       }
     ]
   },
-  {
+  womens: {
     id: 4,
     title: 'Womens',
     routeName: 'womens',
@@ -203,7 +203,7 @@ const SHOP_DATA: ShopCollection[] = [
       }
     ]
   },
-  {
+  mens: {
     id: 5,
     title: 'Mens',
     routeName: 'mens',
@@ -246,6 +246,6 @@ const SHOP_DATA: ShopCollection[] = [
       }
     ]
   }
-];
+};
 
 export default SHOP_DATA;

@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import './collection-preview.styles.scss';
-import { ShopCollectionItem } from '../../pages/shop/shop.types';
 import CollectionItem from '../collection-item/collection-item.component';
+import { ShopCollectionItem } from '../../redux/shop/shop.types';
 
 interface CollectionPreviewProps {
   title: string;
