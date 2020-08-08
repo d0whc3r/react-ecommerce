@@ -1,6 +1,7 @@
 import React from 'react';
 
 import './collections-overview.styles.scss';
+
 import { connect } from 'react-redux';
 import CollectionPreview from '../collection-preview/collection-preview.component';
 import PropTypes from 'prop-types';
