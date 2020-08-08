@@ -1,31 +1,32 @@
 import React from 'react';
-import { ShopCollection } from './shop.types';
-import SHOP_DATA from './shop.data';
+import PropTypes from 'prop-types';
+
 import CollectionPreview from '../../components/collection-preview/collection-preview.component';
+import { createStructuredSelector } from 'reselect';
+import { selectCollections } from '../../redux/shop/shop.selectors';
+import { RootState } from '../../redux/root-reducer';
+import { connect } from 'react-redux';
 
-interface ShopState {
-  collections: ShopCollection[];
+type ShopPageProps = ReturnType<typeof mapStateToProps>;
+
+const ShopPage: React.FC<ShopPageProps> = ({ collections }) => (
+  <div>
+    {collections.map(({ id, ...otherCollectionProps }) => (
+      <CollectionPreview key={id} {...otherCollectionProps} />
+    ))}
+  </div>
+);
+
+ShopPage.propTypes = {
+  collections: PropTypes.array.isRequired
+};
+
+interface MapStateToPropsSelector {
+  collections: ReturnType<typeof selectCollections>;
 }
 
-class ShopPage extends React.Component<any, ShopState> {
-  constructor(props: any) {
-    super(props);
+const mapStateToProps = createStructuredSelector<RootState, MapStateToPropsSelector>({
+  collections: selectCollections
+});
 
-    this.state = {
-      collections: SHOP_DATA
-    };
-  }
-
-  render() {
-    const { collections } = this.state;
-    return (
-      <div>
-        {collections.map(({ id, ...otherCollectionProps }) => (
-          <CollectionPreview key={id} {...otherCollectionProps} />
-        ))}
-      </div>
-    );
-  }
-}
-
-export default ShopPage;
+export default connect(mapStateToProps)(ShopPage);

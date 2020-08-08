@@ -11,3 +11,7 @@ export interface ShopCollection {
   routeName: string;
   items: ShopCollectionItem[];
 }
+
+export interface ShopCollectionState {
+  collections: ShopCollection[];
+}
