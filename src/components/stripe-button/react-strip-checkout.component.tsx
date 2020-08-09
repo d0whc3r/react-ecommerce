@@ -308,7 +308,7 @@ export default class ReactStripeCheckout extends React.Component {
 
   static _isMounted = false;
 
-  constructor(props) {
+  constructor(props: any) {
     super(props);
     this.state = {
       open: false,

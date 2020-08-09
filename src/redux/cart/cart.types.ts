@@ -1,4 +1,4 @@
-import { ShopCollectionItem } from '../../pages/shop/shop.types';
+import { ShopCollectionItem } from '../shop/shop.types';
 
 export const TOGGLE_CART_HIDDEN = 'cart/TOGGLE_CART_HIDDEN';
 export const ADD_ITEM = 'cart/ADD_ITEM';
