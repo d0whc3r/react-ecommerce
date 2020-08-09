@@ -3,7 +3,8 @@ import type { UserConfig } from 'vite'
 
 const config: UserConfig = {
   jsx: 'react',
-  plugins: [reactPlugin]
+  plugins: [reactPlugin],
+  base: '/react-ecommerce/'
 }
 
 export default config
