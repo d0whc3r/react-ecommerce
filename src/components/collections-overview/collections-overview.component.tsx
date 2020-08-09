@@ -5,7 +5,7 @@ import './collections-overview.styles.scss';
 import { connect } from 'react-redux';
 import CollectionPreview from '../collection-preview/collection-preview.component';
 import PropTypes from 'prop-types';
-import { selectCollections } from '../../redux/shop/shop.selectors';
+import { selectCollectionsForPreview } from '../../redux/shop/shop.selectors';
 import { createStructuredSelector } from 'reselect';
 import { RootState } from '../../redux/root-reducer';
 
@@ -20,15 +20,15 @@ const CollectionsOverview: React.FC<CollectionsOverviewProps> = ({ collections }
 );
 
 CollectionsOverview.propTypes = {
-  collections: PropTypes.array.isRequired
+  collections: PropTypes.any.isRequired
 };
 
 interface MapStateToPropsSelector {
-  collections: ReturnType<typeof selectCollections>;
+  collections: ReturnType<typeof selectCollectionsForPreview>;
 }
 
 const mapStateToProps = createStructuredSelector<RootState, MapStateToPropsSelector>({
-  collections: selectCollections
+  collections: selectCollectionsForPreview
 });
 
 export default connect(mapStateToProps)(CollectionsOverview);

@@ -8,7 +8,8 @@
     "test": "react-scripts test",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx src/",
     "lint:fix": "eslint --ext .js,.jsx,.ts,.tsx src/ --fix",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "ci": "rm -fr yarn.lock node_modules dist build && yarn install"
   },
   "dependencies": {
     "@pika/react": "^16.13.1",
@@ -28,7 +29,6 @@
     "@testing-library/user-event": "12.1.1",
     "@types/jest": "26.0.9",
     "@types/node": "14.0.27",
-    "@types/prop-types": "15.7.3",
     "@types/react": "16.9.44",
     "@types/react-dom": "16.9.8",
     "@types/react-redux": "7.1.9",
