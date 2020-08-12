@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import './custom-button.styles.scss';
-import { cls } from '../../utils';
+import { CustomButtonContainer } from './custom-button.styles';
 
 interface CustomButtonProps {
   children: PropTypes.ReactNodeLike;
@@ -12,11 +11,7 @@ interface CustomButtonProps {
   inverted?: boolean;
 }
 
-const CustomButton: React.FC<CustomButtonProps> = ({ children, isGoogleSignIn, inverted = false, ...buttonProps }) => (
-  <button className={cls({ 'custom-button': true, 'google-sign-in': isGoogleSignIn, inverted: inverted })} {...buttonProps}>
-    {children}
-  </button>
-);
+const CustomButton: React.FC<CustomButtonProps> = ({ children, ...props }) => <CustomButtonContainer {...props}>{children}</CustomButtonContainer>;
 
 CustomButton.propTypes = {
   children: PropTypes.node.isRequired,

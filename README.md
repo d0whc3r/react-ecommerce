@@ -1,5 +1,12 @@
+![Pipeline](https://github.com/d0whc3r/react-ecommerce/workflows/Node.js%20CI/badge.svg)
+
 # E-Commerce
 
 Simple e-commerce app using react
 
-Including firebase
+Including:
+ - Firebase
+ - Routing
+ - Redux
+ - Styled components
+ - Stripe integration

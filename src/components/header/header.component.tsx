@@ -10,7 +10,7 @@ import CartDropdown from '../cart-dropdown/cart-dropdown.component';
 import { selectCartHidden } from '../../redux/cart/cat.selectors';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { RootState } from '../../redux/root-reducer';
-import { HeaderContainer, LogoContainer, OptionDiv, OptionLink, OptionsContainer } from './header.styles';
+import { HeaderContainer, LogoContainer, OptionLink, OptionsContainer } from './header.styles';
 
 type HeaderProps = ReturnType<typeof mapStateToProps>;
 
@@ -22,7 +22,13 @@ const Header: React.FC<HeaderProps> = ({ currentUser, hidden }) => (
     <OptionsContainer>
       <OptionLink to="/shop">SHOP</OptionLink>
       <OptionLink to="/shop">CONTACT</OptionLink>
-      {currentUser ? <OptionDiv onClick={() => auth.signOut()}>SIGN OUT</OptionDiv> : <OptionLink to="/signIn">SIGN IN</OptionLink>}
+      {currentUser ? (
+        <OptionLink as="div" onClick={() => auth.signOut()}>
+          SIGN OUT
+        </OptionLink>
+      ) : (
+        <OptionLink to="/signIn">SIGN IN</OptionLink>
+      )}
       <CartIcon />
     </OptionsContainer>
     {hidden ? null : <CartDropdown />}
