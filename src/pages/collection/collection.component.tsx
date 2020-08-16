@@ -15,14 +15,14 @@ interface CollectionPageParams {
 }
 
 interface CollectionPageProps extends RouteComponentProps<CollectionPageParams> {
-  collection?: ShopCollection;
+  collection: ShopCollection | null;
 }
 
 const CollectionPage: React.FC<CollectionPageProps> = ({ collection }) => {
   if (!collection) {
     return (
       <div className="collection-page">
-        <h2 className="title">Unknown collection</h2>
+        <h2 className="title" />
       </div>
     );
   }

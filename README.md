@@ -5,7 +5,7 @@
 Simple e-commerce app using react
 
 Including:
- - Firebase
+ - Firebase (firestore)
  - Routing
  - Redux
  - Styled components

@@ -1,3 +1,5 @@
+export const UPDATE_COLLECTIONS = 'shop/UPDATE_COLLECTIONS';
+
 export interface ShopCollectionItem {
   id: number;
   name: string;
@@ -5,23 +7,35 @@ export interface ShopCollectionItem {
   price: number;
 }
 
-export interface ShopCollection {
-  id: number;
-  title: string;
+export interface ShopCollection extends ShopCollectionFirestore {
+  id: string;
   routeName: string;
+}
+
+export interface ShopCollectionFirestore {
+  title: string;
   items: ShopCollectionItem[];
 }
 
 export interface ShopCollectionCategories {
-  hats: ShopCollection;
-  jackets: ShopCollection;
-  sneakers: ShopCollection;
-  womens: ShopCollection;
-  mens: ShopCollection;
+  // hats: ShopCollection;
+  // jackets: ShopCollection;
+  // sneakers: ShopCollection;
+  // womens: ShopCollection;
+  // mens: ShopCollection;
+  [key: string]: ShopCollection;
 }
 
-export type ShopCollectionCategoriesNames = keyof ShopCollectionCategories;
+// export type ShopCollectionCategoriesNames = keyof ShopCollectionCategories;
+export type ShopCollectionCategoriesNames = keyof ShopCollectionState['collections'];
 
 export interface ShopCollectionState {
-  collections: ShopCollectionCategories;
+  collections: ShopCollectionCategories | null;
 }
+
+export interface UpdateCollections {
+  type: typeof UPDATE_COLLECTIONS;
+  payload: ShopCollectionState['collections'];
+}
+
+export type ShopActionTypes = UpdateCollections;

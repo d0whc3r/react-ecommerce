@@ -14,6 +14,7 @@ import { setCurrentUser } from './redux/user/user.actions';
 import { createStructuredSelector } from 'reselect';
 import { selectCurrentUser } from './redux/user/user.selectors';
 import { RootState } from './redux/root-reducer';
+import { selectCollectionsForPreview } from './redux/shop/shop.selectors';
 import CheckoutPage from './pages/checkout/checkout.component';
 
 type AppProps = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>;
@@ -39,6 +40,11 @@ class App extends React.Component<AppProps> {
         });
       }
       setCurrentUser(null);
+
+      // addCollectionAndDocuments(
+      //   'collections',
+      //   collectionsArray.map(({ title, items }) => ({ title, items }))
+      // );
     });
   }
 
@@ -63,10 +69,12 @@ class App extends React.Component<AppProps> {
 
 interface MapStateToPropsSelector {
   currentUser: ReturnType<typeof selectCurrentUser>;
+  collectionsArray: ReturnType<typeof selectCollectionsForPreview>;
 }
 
 const mapStateToProps = createStructuredSelector<RootState, MapStateToPropsSelector>({
-  currentUser: selectCurrentUser
+  currentUser: selectCurrentUser,
+  collectionsArray: selectCollectionsForPreview
 });
 
 function mapDispatchToProps(dispatch: Dispatch) {

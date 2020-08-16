@@ -1,6 +1,9 @@
 import firebase, { User } from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import { ShopCollection, ShopCollectionCategories, ShopCollectionFirestore } from '../redux/shop/shop.types';
+import { DbUser } from '.';
+import QuerySnapshot = firebase.firestore.QuerySnapshot;
 
 const firebaseConfig = {
   apiKey: 'AIzaSyDTj00F3_TtEi7fFd1E5-BPT_GKm3dA7VM',
@@ -26,7 +29,7 @@ export async function createUserProfileDocument(userAuth: User | null, additiona
   if (!userAuth) {
     return;
   }
-  const userRef = firestore.doc(`users/${userAuth.uid}`);
+  const userRef = firestore.doc(`${DbUser}/${userAuth.uid}`);
 
   const snapShot = await userRef.get();
 
@@ -43,4 +46,34 @@ export async function createUserProfileDocument(userAuth: User | null, additiona
   return userRef;
 }
 
+export async function addCollectionAndDocuments(collectionKey: string, objToAdd: Partial<ShopCollection>[]) {
+  const collectionRef = firestore.collection(collectionKey);
+
+  const batch = firestore.batch();
+  objToAdd.forEach((obj) => {
+    const newDocRef = collectionRef.doc();
+    batch.set(newDocRef, obj);
+  });
+
+  return await batch.commit();
+}
+
+export function convertCollectionsSnapshotToMap(collections: QuerySnapshot<ShopCollectionFirestore>) {
+  const transformed: ShopCollection[] = collections.docs.map((doc) => {
+    const { title, items } = doc.data();
+    return {
+      routeName: encodeURI(title.toLowerCase()),
+      id: doc.id,
+      title,
+      items
+    };
+  });
+
+  return transformed.reduce((a, x) => {
+    a[x.title.toLowerCase()] = x;
+    return a;
+  }, {} as ShopCollectionCategories);
+}
+
+export { QuerySnapshot };
 export default firebase;
