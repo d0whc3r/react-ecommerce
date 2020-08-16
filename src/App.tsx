@@ -40,11 +40,6 @@ class App extends React.Component<AppProps> {
         });
       }
       setCurrentUser(null);
-
-      // addCollectionAndDocuments(
-      //   'collections',
-      //   collectionsArray.map(({ title, items }) => ({ title, items }))
-      // );
     });
   }
 

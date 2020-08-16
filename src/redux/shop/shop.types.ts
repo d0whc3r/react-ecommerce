@@ -18,11 +18,6 @@ export interface ShopCollectionFirestore {
 }
 
 export interface ShopCollectionCategories {
-  // hats: ShopCollection;
-  // jackets: ShopCollection;
-  // sneakers: ShopCollection;
-  // womens: ShopCollection;
-  // mens: ShopCollection;
   [key: string]: ShopCollection;
 }
 

@@ -38,6 +38,10 @@ class ShopPage extends React.Component<ShopPageProps, ShopPageState> {
     });
   }
 
+  public componentWillUnmount() {
+    this.unsubscribeFromSnapshot();
+  }
+
   render() {
     const { match } = this.props;
     const { loading } = this.state;
