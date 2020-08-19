@@ -8,5 +8,6 @@ Including:
  - Firebase (firestore)
  - Routing
  - Redux
- - Styled components
  - Stripe integration
+ - Styled components
+ - Redux thunk

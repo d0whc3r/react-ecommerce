@@ -1,5 +1,5 @@
 import * as reactPlugin from 'vite-plugin-react'
-import type { UserConfig } from 'vite'
+import { UserConfig } from 'vite'
 
 const config: UserConfig = {
   jsx: 'react',
