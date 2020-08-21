@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Route, RouteComponentProps } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -9,39 +9,25 @@ import { ShopActionTypes } from '../../redux/shop/shop.types';
 import CollectionsOverviewContainer from '../../components/collections-overview/collections-overview.container';
 import CollectionPageContainer from '../collection/collection.container';
 
-type ShopPageProps = RouteComponentProps & ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>;
+type ShopPageProps = RouteComponentProps & ReturnType<typeof mapDispatchToProps>;
 
-interface ShopPageState {
-  loading: boolean;
-}
-
-// const CollectionsOverviewWithSpinner = WithSpinner(CollectionsOverview);
-// const CollectionsPageWithSpinner = WithSpinner<any>(CollectionPage);
-
-class ShopPage extends React.Component<ShopPageProps, ShopPageState> {
-  state = {
-    loading: true
-  };
-
-  componentDidMount() {
-    const { fetchCollectionsStartAsync } = this.props;
+const ShopPage: React.FC<ShopPageProps> = ({ match, fetchCollectionsStartAsync }) => {
+  useEffect(() => {
     fetchCollectionsStartAsync();
-  }
+  }, [fetchCollectionsStartAsync]);
 
-  render() {
-    const { match } = this.props;
-    return (
-      <div className="shop-page">
-        <Route exact path={`${match.path}`} component={CollectionsOverviewContainer} />
-        <Route path={`${match.path}/:collectionId`} component={CollectionPageContainer} />
-      </div>
-    );
-  }
+  return (
+    <div className="shop-page">
+      <Route exact path={`${match.path}`} component={CollectionsOverviewContainer} />
+      <Route path={`${match.path}/:collectionId`} component={CollectionPageContainer} />
+    </div>
+  );
+};
 
-  static propTypes = {
-    match: PropTypes.any
-  };
-}
+ShopPage.propTypes = {
+  match: PropTypes.any,
+  fetchCollectionsStartAsync: PropTypes.func.isRequired
+};
 
 function mapDispatchToProps(dispatch: ThunkDispatch<RootState, never, ShopActionTypes>) {
   return {

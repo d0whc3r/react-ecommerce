@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './sign-in.styles.scss';
 import FormInput from '../form-input/form-input.component';
@@ -7,70 +7,54 @@ import { auth, signInWithGoogle } from '../../utils';
 import { RouteComponentProps, withRouter } from 'react-router-dom';
 
 interface SignInState {
-  email: string;
-  password: string;
+  email?: string;
+  password?: string;
 }
 
-class SignIn extends React.Component<RouteComponentProps, SignInState> {
-  constructor(props: RouteComponentProps) {
-    super(props);
+const SignIn: React.FC<RouteComponentProps> = () => {
+  const [userCredentials, setCredentials] = useState<SignInState>({ email: '', password: '' });
 
-    this.state = {
-      email: '',
-      password: ''
-    };
-  }
+  const { email, password } = userCredentials;
 
-  async handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const { email, password } = this.state;
-
     try {
-      await auth.signInWithEmailAndPassword(email, password);
-      this.setState({ email: '', password: '' });
+      await auth.signInWithEmailAndPassword(email!, password!);
+      setCredentials({ email: '', password: '' });
     } catch (error) {
       console.error(error.message);
     }
-  }
+  };
 
-  handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     switch (name) {
       case 'password':
-        this.setState({ [name]: value });
-        break;
       case 'email':
-        this.setState({ [name]: value });
+        setCredentials({ [name]: value });
         break;
     }
-  }
+  };
 
-  signInWithGoogle() {
-    signInWithGoogle();
-  }
+  return (
+    <div className="sign-in">
+      <h2 className="title">I already have an account</h2>
+      <span className="subtitle">Sign in with your email and password</span>
 
-  render() {
-    const { email, password } = this.state;
-    return (
-      <div className="sign-in">
-        <h2 className="title">I already have an account</h2>
-        <span className="subtitle">Sign in with your email and password</span>
+      <form onSubmit={(e) => handleSubmit(e)}>
+        <FormInput label="Email" type="email" name="email" value={email} required handleChange={(e) => handleChange(e)} />
+        <FormInput label="Password" type="password" name="password" value={password} required handleChange={(e) => handleChange(e)} />
 
-        <form onSubmit={(e) => this.handleSubmit(e)}>
-          <FormInput label="Email" type="email" name="email" value={email} required handleChange={(e) => this.handleChange(e)} />
-          <FormInput label="Password" type="password" name="password" value={password} required handleChange={(e) => this.handleChange(e)} />
-
-          <div className="buttons">
-            <CustomButton type="submit">Sign In</CustomButton>
-            <CustomButton type="button" isGoogleSignIn onClick={() => this.signInWithGoogle()}>
-              Sign In With Google
-            </CustomButton>
-          </div>
-        </form>
-      </div>
-    );
-  }
-}
+        <div className="buttons">
+          <CustomButton type="submit">Sign In</CustomButton>
+          <CustomButton type="button" isGoogleSignIn onClick={() => signInWithGoogle()}>
+            Sign In With Google
+          </CustomButton>
+        </div>
+      </form>
+    </div>
+  );
+};
 
 export default withRouter(SignIn);

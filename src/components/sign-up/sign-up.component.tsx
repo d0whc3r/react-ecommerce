@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import './sign-up.styles.scss';
 
@@ -14,21 +14,17 @@ interface SignUpState {
   confirmPassword: string;
 }
 
-class SignUp extends React.Component<any, SignUpState> {
-  constructor(props: any) {
-    super(props);
+const SignUp: React.FC = () => {
+  const [userCredentials, setUserCredentials] = useState<SignUpState>({
+    displayName: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+  const { displayName, email, password, confirmPassword } = userCredentials;
 
-    this.state = {
-      displayName: '',
-      email: '',
-      password: '',
-      confirmPassword: ''
-    };
-  }
-
-  async handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const { displayName, email, password, confirmPassword } = this.state;
     if (password !== confirmPassword) {
       alert("Password don't match");
       return;
@@ -36,7 +32,7 @@ class SignUp extends React.Component<any, SignUpState> {
     try {
       const { user } = await auth.createUserWithEmailAndPassword(email, password);
       await createUserProfileDocument(user, { displayName });
-      this.setState({
+      setUserCredentials({
         displayName: '',
         email: '',
         password: '',
@@ -45,38 +41,35 @@ class SignUp extends React.Component<any, SignUpState> {
     } catch (error) {
       console.error(error.message);
     }
-  }
+  };
 
-  render() {
-    const { displayName, email, password, confirmPassword } = this.state;
-    return (
-      <div className="sign-up">
-        <h2 className="title"> I do not have an account </h2>
-        <span>Sign up with your email and password</span>
-
-        <form className="sign-up-form" onSubmit={(e) => this.handleSubmit(e)}>
-          <FormInput label="Display Name" name="displayName" type="text" value={displayName} required handleChange={(e) => this.handleChange(e)} />
-          <FormInput label="Email" name="email" type="email" value={email} required handleChange={(e) => this.handleChange(e)} />
-          <FormInput label="Password" name="password" type="password" value={password} required handleChange={(e) => this.handleChange(e)} />
-          <FormInput
-            label="Confirm Password"
-            name="confirmPassword"
-            type="password"
-            value={confirmPassword}
-            required
-            handleChange={(e) => this.handleChange(e)}
-          />
-          <CustomButton type="submit">SIGN UP</CustomButton>
-        </form>
-      </div>
-    );
-  }
-
-  private handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     // @ts-ignore
-    this.setState({ [name]: value });
-  }
-}
+    setUserCredentials({ [name]: value });
+  };
+
+  return (
+    <div className="sign-up">
+      <h2 className="title"> I do not have an account </h2>
+      <span>Sign up with your email and password</span>
+
+      <form className="sign-up-form" onSubmit={(e) => handleSubmit(e)}>
+        <FormInput label="Display Name" name="displayName" type="text" value={displayName} required handleChange={(e) => handleChange(e)} />
+        <FormInput label="Email" name="email" type="email" value={email} required handleChange={(e) => handleChange(e)} />
+        <FormInput label="Password" name="password" type="password" value={password} required handleChange={(e) => handleChange(e)} />
+        <FormInput
+          label="Confirm Password"
+          name="confirmPassword"
+          type="password"
+          value={confirmPassword}
+          required
+          handleChange={(e) => handleChange(e)}
+        />
+        <CustomButton type="submit">SIGN UP</CustomButton>
+      </form>
+    </div>
+  );
+};
 
 export default SignUp;
