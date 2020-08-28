@@ -1,19 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 
 import './collection-item.styles.scss';
 import CustomButton from '../custom-button/custom-button.component';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { addItem } from '../../redux/cart/cart.actions';
-import { CartAddAction } from '../../redux/cart/cart.types';
+import { CartContext } from '../../provider/cart.provider';
 import { ShopCollectionItem } from '../../redux/shop/shop.types';
 
-interface CollectionItemProps extends ReturnType<typeof mapDispatchToProps> {
+interface CollectionItemProps {
   item: ShopCollectionItem;
 }
 
-const CollectionItem: React.FC<CollectionItemProps> = ({ item, addItem }) => {
+const CollectionItem: React.FC<CollectionItemProps> = ({ item }) => {
+  const { addItem } = useContext(CartContext);
   const { name, price, imageUrl } = item;
   return (
     <div className="collection-item">
@@ -30,14 +28,7 @@ const CollectionItem: React.FC<CollectionItemProps> = ({ item, addItem }) => {
 };
 
 CollectionItem.propTypes = {
-  addItem: PropTypes.func.isRequired,
   item: PropTypes.any
 };
 
-function mapDispatchToProps(dispatch: Dispatch) {
-  return {
-    addItem: (item: CartAddAction['payload']) => dispatch(addItem(item))
-  };
-}
-
-export default connect(null, mapDispatchToProps)(CollectionItem);
+export default CollectionItem;

@@ -1,42 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
 
 import ShoppingIcon from '../../assets/shopping-bag.svg';
 
 import './cart-icon.styles.scss';
-import { connect } from 'react-redux';
-import { Dispatch } from 'redux';
-import { toggleCartHidden } from '../../redux/cart/cart.actions';
-import { RootState } from '../../redux/root-reducer';
-import { selectCartItemsCount } from '../../redux/cart/cat.selectors';
-import { createStructuredSelector } from 'reselect';
+import { CartContext } from '../../provider/cart.provider';
 
-type CartIconProps = ReturnType<typeof mapDispatchToProps> & ReturnType<typeof mapStateToProps>;
-
-const CartIcon: React.FC<CartIconProps> = ({ itemCount, toggleCartHidden }) => (
-  <div className="cart-icon" onClick={toggleCartHidden}>
-    <img src={ShoppingIcon} className="shopping-icon" alt="Shopping icon" />
-    <span className="item-count">{itemCount}</span>
-  </div>
-);
-
-CartIcon.propTypes = {
-  itemCount: PropTypes.number.isRequired,
-  toggleCartHidden: PropTypes.func.isRequired
+const CartIcon: React.FC = () => {
+  const { toggleHidden, cartItemsCount } = useContext(CartContext);
+  return (
+    <div className="cart-icon" onClick={() => toggleHidden()}>
+      <img src={ShoppingIcon} className="shopping-icon" alt="Shopping icon" />
+      <span className="item-count">{cartItemsCount}</span>
+    </div>
+  );
 };
 
-interface MapStateToPropsSelector {
-  itemCount: ReturnType<typeof selectCartItemsCount>;
-}
-
-const mapStateToProps = createStructuredSelector<RootState, MapStateToPropsSelector>({
-  itemCount: selectCartItemsCount
-});
-
-function mapDispatchToProps(dispatch: Dispatch) {
-  return {
-    toggleCartHidden: () => dispatch(toggleCartHidden())
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CartIcon);
+export default CartIcon;

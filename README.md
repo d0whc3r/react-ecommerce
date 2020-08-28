@@ -11,3 +11,5 @@ Including:
  - Stripe integration
  - Styled components
  - Redux thunk
+ - Hooks
+ - Context

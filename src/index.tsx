@@ -5,12 +5,12 @@ import './index.scss';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { HashRouter } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import { persistor, store } from './redux/store';
+import CartProvider from './provider/cart.provider';
 import { PersistGate } from 'redux-persist/integration/react';
+import { persistor } from './redux/store';
 
 ReactDOM.render(
-  <Provider store={store}>
+  <CartProvider>
     <HashRouter hashType="slash">
       <PersistGate persistor={persistor}>
         <React.StrictMode>
@@ -18,7 +18,7 @@ ReactDOM.render(
         </React.StrictMode>
       </PersistGate>
     </HashRouter>
-  </Provider>,
+  </CartProvider>,
   document.getElementById('root')
 );
 
